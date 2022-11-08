@@ -31,7 +31,7 @@ Still need to be implemented:
 <li>Beautiful UI, </li>
 <li>easy-to-navigate front page, </li>
 <li>multi-word search (with word order and distance), </li>
-<li>indexing and searching user-specified texts</li>
+<li>indexing and searching user-specified texts,</li>
 <li>extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings). </li>
 <li>adding Tables of Contents to most of the books to make search show more human-readable word locations</li>
 <li>Trainer needs more modes like "learn to read words with 6 consonants in a row".</li>
