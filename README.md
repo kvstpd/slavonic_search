@@ -24,7 +24,7 @@ After all files are in place one can populate the dictionary database by visitin
 
 It may take more time & server resources to build the database than web server settings allow. In that case one can instead login to server shell and run <b>php-cgi index.php populate</b> in the directory containing project files -- assuming shell access and php-cgi are available. Other options, including downloading a pre-built database, will be added soon.
 
-<i>Another HIGHLY RECOMMENDED action is to set ADMIN_MODE to 0 in <b>config.php</b> file as soon as the database is built. Later, if you modify any library files in "books" subdirectory, you can set ADMIN_MODE back to 1, delete the old database file, re-build it and once again set ADMIN_MODE to 0. This can prevent accidental database corruption and make script usage more secure</i>
+<i>Another HIGHLY RECOMMENDED action is to set ADMIN_MODE to 0 in <b>config.php</b> file as soon as the database is built. Later, if you modify any library files in "books" subdirectory, you can set ADMIN_MODE back to 1, delete the old database file, re-build it and once again set ADMIN_MODE to 0. This can prevent accidental database corruption and make script usage more secure.</i>
 
 Still need to be implemented: 
 <ol>
