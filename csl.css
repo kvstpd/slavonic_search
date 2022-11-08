@@ -1,0 +1,64 @@
+/*
+ // Δόξα σοι ὁ Θεὸς ἡμῶν, δόξα σοι.
+ // Сла́ва тебѣ̀ бж҃е на́шъ, сла́ва тебѣ̀.
+ // Glory to Thee, our God, glory to Thee.
+ */
+
+@font-face {
+    font-family: 'Ponomar Unicode';
+    src: url('fonts/PonomarUnicode.eot');
+    src: url('fonts/PonomarUnicode.eot?#iefix') format('embedded-opentype'),
+    url('fonts/PonomarUnicode.woff2') format('woff2'),
+    url('fonts/PonomarUnicode.woff') format('woff'),
+    url('fonts/PonomarUnicode.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Triodion Ucs';
+    src: url('fonts/tri_ucs.eot');
+}
+
+@font-face {
+    font-family: 'Triodion Ucs';
+    src: url('fonts/tri_ucs.ttf') format('truetype'),
+	url('fonts/tri_ucs.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Triodion Ucs SpacedOut';
+    src: url('fonts/tri_so_ucs.eot');
+}
+
+@font-face {
+    font-family: 'Triodion Ucs SpacedOut';
+    src: url('fonts/tri_so_ucs.ttf') format('truetype'),
+	url('fonts/tri_so_ucs.woff') format('woff');;
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+    
+.slv { font-family: 'Ponomar Unicode'; }
+.slv_ucs { font-family: 'Triodion Ucs'; }
+.slv_unicode { font-family: 'Ponomar Unicode'; }
+.slv_civil { font-family: 'font-family:Verdana,Arial,Helvetica,sans-serif;'; }
+
+.csl_result_container { display: flex;  }
+.csl_result_block { display: 'inline-block'; margin: 4px;  border: 1px solid grey;  overflow-y: scroll; min-width: 150px; min-height: 350px;  max-height: 500px; }
+
+.csl_search_param { margin-left: 15px; }
+.csl_book_select { margin-left: 15px; }
+.csl_output_param { margin-left: 15px; }
+
+#csl_occurences { max-width: 150px; width: 150px;}
+
+#csl_search_head { display: inline-block; }
+#csl_book_list { display: none; }
+#csl_multi_words { display: none; }
