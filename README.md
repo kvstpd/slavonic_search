@@ -4,7 +4,7 @@ Web tools for searching, studying and encoding Church Slavonic texts.
 
 The aim of this project is to create a set of tools that perform word search and analysis of Church Slavonic books, help one to learn and explore Church Slavonic words and convert between existing encodings of Church Slavonic (Unicode, legacy UCS and possibly, in the future, HIP).
 
-Right now there are  several "components" of these tools (not all of them yet separated in code):
+Right now there are  several "components" of these tools (not all of them yet separated in the code):
 
 <b>Database builder</b>: Creates index & dictionary database from a fixed library of Slavonic texts (Bible, lithurgical books, Philokalia). Presently can make two kinds of databases: one for Search tool and another (simpler & more compact) for Slavoniser app (link to project will be added soon).
 
