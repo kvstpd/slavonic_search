@@ -15,12 +15,14 @@ Finally, tools contain Slavonic Encoding Converter that converts user specified 
 PHP is used as the main programming language (mbstring extension is required) and SQLite as database backend (MySQL may also work but right now is much slower and almost untested).
 
 Still need to be implemented: 
-a) Beautiful UI, 
-b) easy-to-navigate front page, 
-c) multi-word search (with word order and distance), 
-d) indexing and searching user-specified texts (also extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings). 
-e) Trainer needs more modes like "learn to read words with 6 consonants in a row". 
-f) Encoding Converter must also produce Civil Cyrillic text with accents.
+<ol>
+<li>Beautiful UI, </li>
+<li>easy-to-navigate front page, </li>
+<li>multi-word search (with word order and distance), </li>
+<li>indexing and searching user-specified texts (also extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings). </li>
+<li>Trainer needs more modes like "learn to read words with 6 consonants in a row". </li>
+<li>Encoding Converter must also produce Civil Cyrillic text with accents.</li>
+</ol>
 
 Church Slavonic texts are taken from Ponomar project Web page, https://www.ponomar.net (and slightly modified)
 Fonts are taken from https://www.ponomar.net and http://irmologion.ru 
