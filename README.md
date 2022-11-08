@@ -22,7 +22,12 @@ d) indexing and searching user-specified texts (also extending the library used 
 e) Trainer needs more modes like "learn to read words with 6 consonants in a row". 
 f) Encoding Converter must also produce Civil Cyrillic text with accents.
 
+Church Slavonic texts are taken from Ponomar project Web page, https://www.ponomar.net (and slightly modified)
+Fonts are taken from https://www.ponomar.net and http://irmologion.ru 
+
 
 # Инструментарий для церковнославянских текстов
 
 Веб-инструментарий для поиска, изучения и смены кодировки текстов на церковнославянском языке.
+
+Более полное описание на русском будет написано вскоре.
