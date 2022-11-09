@@ -20,7 +20,7 @@ PHP is used as the main programming language (mbstring extension is required) an
 
 <b>Installation</b> is presently done by copying all the project files to a location on Web server and making sure PHP scripts have write permission to create & write to SQLite database file in the same directory. 
 
-<i>That's not exactly secure so it's RECOMMENDED to edit <b>config.php</b> file to specify a more fitting path for database file - that PHP still needs permissions to write to.</i>
+<i>That's not exactly secure so it's RECOMMENDED to edit <b>config.php</b> file to specify a more fitting path for database file (in DB_NAME constant) - that PHP still needs permissions to write to.</i>
 
 After all files are in place one can populate the dictionary database by visiting "Populate DB" link of script's main page top menu.
 
@@ -58,21 +58,20 @@ Fonts are taken from https://www.ponomar.net and http://irmologion.ru
 
 На сегодня инструментарий состоит из следующих компонентов:
 
-<b>Построитель базы данных</b>: Индексирует тексты и создаёт словарь на основе заданной библиотеки церковнославянских книг (Елизаветинсая Библия, богослужебные книги, Добротолюбие). В данный момент возможно создание двух баз данных: одна для поиска по книгам, вторая для приложения "Славянизатор" (проект и ссылка на него появятся в ближайшем будущем).
+<b>Построитель базы данных</b>: Индексирует тексты и создаёт словарь на основе заданной библиотеки церковнославянских книг (Елизаветинская Библия, богослужебные книги, Добротолюбие). В данный момент возможно создание двух баз данных: одна для поиска по книгам, вторая для приложения "Славянизатор" (проект и ссылка на него появятся в ближайшем будущем).
 
-<b>Поиск</b>:
+<b>Поиск</b>: Ищет слово в текстах книг библиотеки (всех или нескольких выбранных), сообщает, сколько раз оно встречается, отображает найденные места с контекстом употребления слова. Запросы для поиска могут быть в кодировке Unicode, UCS, или на упрощённой гражданской кириллице. Последний вариант наиболее полезен для нахождения различных вариантов ударений, узкого и широкого написания букв, расположения титла и т.д. На данный момент возможен поиск по началу, окончанию или середине слова, а также по точному значению. 
 
-<b>Search tool</b>: Performs single word search over these texts (or a subset of them), finding number of occurences, their locations in the books and showing context of each occurence. Search queries can be entered in Unicode, legacy UCS encoding and simplified Civil Cyrillic (perhaps the most useful option that helps to find all variants of accents, wide and narrow letters, titlo positions, etc.). "Begins with", "Ends with", "Contains" and "Exact match" queries are possible right now.
+<b>Тренажёр чтеца на церковнославянском</b>: Отображает слова заданной длины (определяется выбором уровня сложности) в виде табличек по 10, в случайном порядке, для помощи в запоминании и правильном прочтении сложных слов. Возможно, пользователь обнаружит и незнакомые ему слова.
 
-<b>Church Slavonic Trainer</b>: Displays Slavonic words of certain length and complexity (chosen by selecting "Difficulty level") in random batches, to help user to remember them, read them properly and perhaps discover some words one has never met before.
+<b>Перекодировщик</b>: Меняет кодировку текста, введённого пользователем (на текущий момент - из Unicode в UCS и наоборот).
 
-<b>Slavonic Encoding Converter</b>: Converts user specified text between different encodings (presently Unicode and UCS).
+В качестве основного языка программирования используется PHP (обязательно наличие модуля mbstring), базой данных служит файл SQLite (БД MySQL также может работать, но пока что работа с ней недостаточно оптимизирована и протестирована).
 
-PHP is used as the main programming language (mbstring extension is required) and SQLite file as database backend (MySQL may also work but right now is much slower and almost untested).
+<b>Установка</b> на текущий момент осуществляется копированием всех файлов проекта на веб-сервер. Необходимо убедиться, что скрипты PHP имеют права доступа, чтобы создавать и записывать файл базы данных в той директории, где они находятся.  
 
-<b>Installation</b> is presently done by copying all the project files to a location on Web server and making sure PHP scripts have write permission to create & write to SQLite database file in the same directory. 
+<i>Поскольку такой подход может оказаться недостаточно безопасным, РЕКОМЕНДУЕТСЯ отредактировать файл <b>config.php</b> и указать другой, более подходящий путь для файла БД (в переменной DB_NAME). Естественно, PHP должен иметь права доступа к данному пути.</i>
 
-<i>That's not exactly secure so it's RECOMMENDED to edit <b>config.php</b> file to specify a more fitting path for database file - that PHP still needs permissions to write to.</i>
 
 After all files are in place one can populate the dictionary database by visiting "Populate DB" link of script's main page top menu.
 
