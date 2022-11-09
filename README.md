@@ -32,7 +32,7 @@ php builder.php --populate
 
 in the directory containing project files -- assuming shell access and php command are available. Other options, including downloading a pre-built database, will be added soon.
 
-<i>Another HIGHLY RECOMMENDED action is to set ADMIN_MODE to 0 in <b>config.php</b> file as soon as the database is built. Later, if you modify any library files in "books" subdirectory, you can set ADMIN_MODE back to 1, delete the old database file, re-build it and once again set ADMIN_MODE to 0. This can prevent accidental database corruption and make script usage more secure.</i>
+<i>Another HIGHLY RECOMMENDED action is to set ADMIN_MODE constant to 0 in <b>config.php</b> file as soon as the database is built. Later, if you modify any library files in "books" subdirectory, you can set ADMIN_MODE back to 1, delete the old database file, re-build it and once again set ADMIN_MODE to 0. This can prevent accidental database corruption and make script usage more secure.</i>
 
 Still need to be implemented: 
 <ol>
@@ -40,9 +40,9 @@ Still need to be implemented:
 <li>easy-to-navigate front page, </li>
 <li>multi-word search (with word order and distance), </li>
 <li>indexing and searching user-specified texts,</li>
-<li>extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings). </li>
-<li>adding Tables of Contents to most of the books to make search show more human-readable word locations</li>
-<li>Trainer needs more modes like "learn to read words with 6 consonants in a row".</li>
+<li>extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings),</li>
+<li>adding Tables of Contents to most of the books to make search show more human-readable word locations,</li>
+<li>Trainer needs more modes like "learn to read words with 6 consonants in a row",</li>
 <li>Encoding Converter must also produce Civil Cyrillic text with accents.</li>
 </ol>
 
@@ -70,32 +70,32 @@ Fonts are taken from https://www.ponomar.net and http://irmologion.ru
 
 <b>Установка</b> на текущий момент осуществляется копированием всех файлов проекта на веб-сервер. Необходимо убедиться, что скрипты PHP имеют права доступа, чтобы создавать и записывать файл базы данных в той директории, где они находятся.  
 
-<i>Поскольку такой подход может оказаться недостаточно безопасным, РЕКОМЕНДУЕТСЯ отредактировать файл <b>config.php</b> и указать другой, более подходящий путь для файла БД (в переменной DB_NAME). Естественно, PHP должен иметь права доступа к данному пути.</i>
+<i>Поскольку такой подход может оказаться недостаточно безопасным, РЕКОМЕНДУЕТСЯ отредактировать файл <b>config.php</b> и указать другой, более подходящий путь для файла БД (задаётся в константе DB_NAME). Естественно, PHP должен иметь права доступа к данному пути.</i>
 
+После копирования файлов необходимо создать базу данных, нажав ссылку "Populate DB" в верхнем меню основной страницы скрипта. 
 
-After all files are in place one can populate the dictionary database by visiting "Populate DB" link of script's main page top menu.
-
-It may take more time & server resources to build the database than web server settings allow. In that case one can instead login to server shell and run
+Создание и наполнение базы данных может занять существенно больше времени и ресурсов сервера, чем его настройки позволяют. Если есть такие ограничения, можно зайти в командную оболочку сервера, сменить текущую директорию на ту, где находятся файлы проекта, и выполнить команду:
 
 ```sh
 php builder.php --populate
 ```
 
-in the directory containing project files -- assuming shell access and php command are available. Other options, including downloading a pre-built database, will be added soon.
+(Конечно, если есть доступ к командой оболочке сервера и команде php). Другие варианты создания БД и ссылка на готовый файл будут добавлены позже.
 
-<i>Another HIGHLY RECOMMENDED action is to set ADMIN_MODE to 0 in <b>config.php</b> file as soon as the database is built. Later, if you modify any library files in "books" subdirectory, you can set ADMIN_MODE back to 1, delete the old database file, re-build it and once again set ADMIN_MODE to 0. This can prevent accidental database corruption and make script usage more secure.</i>
+<i>Также ВЕСЬМА РЕКОМЕНДУЕТСЯ установить константу ADMIN_MODE в файле <b>config.php</b> равной 0 как только создание и наполнение базы данных завершатся. В дальнейшем, если вы меняете содержание файлов в субдиректории "books" и требуется их индексировать заново, можно снова установить ADMIN_MODE равным 1, пересоздать файл базы данных, а затем снова вернуть значение 0. Это поможет избежать повреждения базы данных и повысит безопасность работы инструментария.</i>
 
-Still need to be implemented: 
+Всё ещё не реализованы - но, надеемся, будут:
+
 <ol>
-<li>Beautiful UI, </li>
-<li>easy-to-navigate front page, </li>
-<li>multi-word search (with word order and distance), </li>
-<li>indexing and searching user-specified texts,</li>
-<li>extending the library used by the tools to contain more books, like Pre-XVII century reform ones, modern XX-XXI cent. texts, Church Fathers writings). </li>
-<li>adding Tables of Contents to most of the books to make search show more human-readable word locations</li>
-<li>Trainer needs more modes like "learn to read words with 6 consonants in a row".</li>
-<li>Encoding Converter must also produce Civil Cyrillic text with accents.</li>
+<li>Более привлекательный внешний вид страниц, </li>
+<li>простая и понятная навигация по инструментам, </li>
+<li>поиск нескольких слов (с указанием порядка и расстояния между ними), </li>
+<li>индексация и поиск по книгам, добавленным в библиотеку пользователем,</li>
+<li>расширение библиотеки церковнославянских текстов, (напр. книги в дониконовской орфографии, новые богослужебные тексты XX-XXI вв., святоотеческие творения), </li>
+<li>добавление подробного содержания к большинству книг для более ясного отображения результатов поиска,</li>
+<li>новые режимы Тренажёра чтеца, например, "чтение слов, содержащих 6 согласных подряд",</li>
+<li>Перекодировщик должен уметь конвертировать тексты в гражданскую кириллицу с ударениями.</li>
 </ol>
 
-Church Slavonic texts are taken from Ponomar project Web page, https://www.ponomar.net (and slightly modified)
-Fonts are taken from https://www.ponomar.net and http://irmologion.ru 
+Книги взяты с веб-страницы Ponomar project, https://www.ponomar.net (и немного отредактированы)
+Церковнославянские шрифты взяты с сайтов https://www.ponomar.net и http://irmologion.ru 
