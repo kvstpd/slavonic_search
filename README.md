@@ -20,7 +20,7 @@ PHP is used as the main programming language (mbstring extension is required) an
 
 <i>That's not exactly secure so it's RECOMMENDED to edit <b>config.php</b> file to specify a more fitting path for database file - that PHP still needs permissions to write to.</i>
 
-After all files are in place one can populate the dictionary database by visiting <b>[address_to_server_location]/index.php?populate</b>
+After all files are in place one can populate the dictionary database by visiting "Populate DB" link of script's main page top menu.
 
 It may take more time & server resources to build the database than web server settings allow. In that case one can instead login to server shell and run
 
