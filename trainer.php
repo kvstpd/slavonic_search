@@ -7,10 +7,13 @@ include_once("config.php");
 include_once("headers.php");
 
 
-if (ADMIN_MODE == 1)
-	CslLogger::defaultLogger()->setLogImmediately(SHOW_LOGGER_IMMEDIATELY);
 
-CslLogger::defaultLogger()->setLogMode('html');
+header("Content-type: text/html; charset=UTF-8");
+
+$logger = CslLogger::defaultLogger();
+
+$logger->setLogMode('html');
+
 
 
 $page_size = 10;
@@ -32,9 +35,6 @@ $levels = array(
 	18 => array('name' => 'Митрополит', 'exact' => 18, 'voc' => 'Ваше Высокопреосвященство'),
 	19 => array('name' => 'Патриарх', 'min' => 19, 'voc' => 'Ваше Святейшество')
 );
-
-$db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, CslLogger::defaultLogger() );
-
 
 
 
@@ -173,6 +173,16 @@ header("Content-type: text/html; charset=UTF-8");
 		
 		
 		<?php
+            
+            $db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, $logger );
+            
+            if ($db === false)
+            {
+                $logger->log(9, "Failed to connect to database!");
+                $logger->fail_with_error_message("Failed to connect to database!" , '</body></html>');
+            }
+            
+            
 			if (empty($_REQUEST['level']))
 			{
 				trainer_intro();
@@ -200,6 +210,12 @@ header("Content-type: text/html; charset=UTF-8");
 
 				next_page_form( $level, $page, $seed );
 			}
+            
+            
+            $db->close();
+        
+            if (DEBUG_MODE == 1)
+                $logger->printEntries();
 	
 ?>
     </body>

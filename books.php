@@ -7,22 +7,18 @@ include_once("config.php");
 include_once("headers.php");
 
 
-
-if (ADMIN_MODE == 1)
-	CslLogger::defaultLogger()->setLogImmediately(SHOW_LOGGER_IMMEDIATELY);
-
-CslLogger::defaultLogger()->setLogMode('html');
-
-
-
-$db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, CslLogger::defaultLogger() );
-
-
-
-
-
-
 header("Content-type: text/html; charset=UTF-8");
+
+$logger = CslLogger::defaultLogger();
+
+$logger->setLogMode('html');
+    
+
+
+
+$db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, $logger );
+
+
 ?>
 <html>
     <head>
@@ -43,58 +39,56 @@ header("Content-type: text/html; charset=UTF-8");
 		</style>
     </head>
     <body>
-		<h1>Библиотека книг на церковнославянском языке</h1>		
-		
-		<?php
-			if ($db === false)
-			{
-				CslLogger::defaultLogger()-> CslLogger::defaultLogger()->fail_with_error_message("Unable to connect to database!");
-				echo '<p></p></body></html>';
-				exit();
-			}
+		<h1>Библиотека книг на церковнославянском языке</h1>
+<?php
+        if ($db === false)
+        {
+            $logger->fail_with_error_message("Unable to connect to database!",  '</body></html>');
+            echo '<p></p></body></html>';
+            exit();
+        }
 
-			if (!empty($_REQUEST['fix']) && $_REQUEST['fix'])
-			{	
-				$book_data = csl_default_book_data();
+        if (!empty($_REQUEST['fix']) && $_REQUEST['fix'])
+        {
+            $book_data = csl_default_book_data();
 
-				foreach ($book_data as $path=>$fix)
-				{
-					$db->update_book_by_path($path, $db->escape_string($fix[0]), $db->escape_string($fix[1]) );
-					//echo '<p>'.( ? '1' : '0').'</p>';
-				}
-			}
+            foreach ($book_data as $path=>$fix)
+            {
+                $db->update_book_by_path($path, $db->escape_string($fix[0]), $db->escape_string($fix[1]) );
+                //echo '<p>'.( ? '1' : '0').'</p>';
+            }
+        }
 
 
-			$result = $db->get_books();
+        $result = $db->get_books();
 
-			//print_r($result);
+        //print_r($result);
 
-			echo '<form action="books.php" method="get">
-			<input type="hidden" name="fix" value="1">
-			<input type="submit" value="Загрузить" class="fix_button">
-			</form>';
-			
-			echo '<table class="books"><thead><tr><td class="civ_h">Файл</td><td class="civ_h">Название</td><td class="civ_h">Описание</td><td class="civ_h">Дополнительно</td></thead>';
+        echo '<form action="books.php" method="get">
+        <input type="hidden" name="fix" value="1">
+        <input type="submit" value="Загрузить" class="fix_button">
+        </form>';
+        
+        echo '<table class="books"><thead><tr><td class="civ_h">Файл</td><td class="civ_h">Название</td><td class="civ_h">Описание</td><td class="civ_h">Дополнительно</td></thead>';
 
-            $book_types = csl_default_book_types();
+        $book_types = csl_default_book_types();
+        
+        foreach ($result as $row)
+        {
+            $comment = ' ';
             
-			foreach ($result as $row)
-			{
-                $comment = ' ';
-                
-                if (isset($book_types[$row['type']]) )
-                {
-                    $comment = $book_types[$row['type']];
-                }
-                
-				echo "<tr><td class='civ_t'>{$row['path']}</td><td class='civ_t'>{$row['name']}</td><td class='civ_t'>{$row['description']}</td><td class='civ_t'>$comment</td></tr>";
-			}
+            if (isset($book_types[$row['type']]) )
+            {
+                $comment = $book_types[$row['type']];
+            }
+            
+            echo "<tr><td class='civ_t'>{$row['path']}</td><td class='civ_t'>{$row['name']}</td><td class='civ_t'>{$row['description']}</td><td class='civ_t'>$comment</td></tr>";
+        }
 
-			echo '</tr></table>';
-			
-
-
-
+        echo '</tr></table>';
+    
+        if (DEBUG_MODE == 1)
+            $logger->printEntries();
 	
 ?>
     </body>

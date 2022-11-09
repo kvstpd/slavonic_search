@@ -7,18 +7,17 @@
 include_once("config.php");
 include_once("headers.php");
 
+    
+// Search several words separated by  ' ' : need options "ANY",  "ALL" (+ changeable distance, abs() defaults to 1000 chars), "EXACT" (distance is <4-5-6 and without abs() )
 
-if (ADMIN_MODE == 1)
-    CslLogger::defaultLogger()->setLogImmediately(SHOW_LOGGER_IMMEDIATELY);
-
-CslLogger::defaultLogger()->setLogMode('html');
     
 
-$db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, CslLogger::defaultLogger() );
-
-    
 header("Content-type: text/html; charset=UTF-8");
 
+$logger = CslLogger::defaultLogger();
+
+$logger->setLogMode('html');
+    
 
 
 
@@ -222,6 +221,16 @@ function show_and_get_results_per_page()
     <body>
     <h3>Поиск в церковнославянских текстах</h3>
     <?php
+        
+        $db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, $logger );
+        
+        if ($db === false)
+        {
+            $logger->log(9, "Failed to connect to database!");
+            $logger->fail_with_error_message("Failed to connect to database!" , '</body></html>');
+        }
+        
+        
 		$search_query = isset($_POST['search'])  ? $_POST['search'] : '';
 
 		$search_query = htmlspecialchars(trim($search_query));
@@ -273,22 +282,20 @@ function show_and_get_results_per_page()
 
             //print_r($book_ids);
 
-                
             if ($result === false)
-            {
-                CslLogger::defaultLogger()->fail_with_error_message("Search for '$query' failed");
-            }
+                $logger->log(1, "Search for '$query' failed");
             
         }
-        
-
-
-
-
-
-        
+    
 
 		echo '</form>';
+        
+        
+        $db->close();
+    
+        if (DEBUG_MODE == 1)
+            $logger->printEntries();
+        
     ?>
     </body>
 </html>

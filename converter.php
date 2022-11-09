@@ -7,38 +7,16 @@ include_once("config.php");
 include_once("headers.php");
 
 
-function show_convert_params()
-{
-        $query_encodings = array('q_unicode' => 'Unicode', 'q_ucs' => 'UCS (как на orthlib.ru)');
-        $result_encodings = array('r_unicode' => 'Unicode', 'r_ucs' => 'UCS (как на orthlib.ru)', 'r_civil' => 'Гражданский шрифт с ударениями');
 
-        echo '<div id="csl_encoding_params">';
-        echo '<fieldset>';
-        echo '<legend>Исходная кодировка:</legend>';
-        make_radio_group('csl_output_param', 'query_encoding', $query_encodings, 'q_unicode');
-        echo '</fieldset>';
-       
-        echo '<fieldset>';
-        echo '<legend>Кодировка результата:</legend>';
-        make_radio_group('csl_output_param', 'result_encoding', $result_encodings, 'r_ucs');
-        echo '</fieldset>';
-        echo '</div>';
-}
-
-    
-    
-if (ADMIN_MODE == 1)
-    CslLogger::defaultLogger()->setLogImmediately(SHOW_LOGGER_IMMEDIATELY);
-
-CslLogger::defaultLogger()->setLogMode('html');
-    
-
-//$db = csl_db_connect(DB_TYPE, DB_NAME, DB_SERVER, DB_USER, DB_PASSWORD, CslLogger::defaultLogger() );
-
-    
 header("Content-type: text/html; charset=UTF-8");
+
+$logger = CslLogger::defaultLogger();
+
+$logger->setLogMode('html');
     
-    
+
+
+
     
 ?>
 <html>
@@ -50,6 +28,8 @@ header("Content-type: text/html; charset=UTF-8");
     <body>
     <h3>Преобразование кодировок церковнославянских текстов</h3>
     <?php
+        show_main_menu();
+        
         $convert_query = isset($_POST['text'])  ? $_POST['text'] : '';
 
         $convert_query = htmlspecialchars(trim($convert_query));
@@ -134,11 +114,11 @@ header("Content-type: text/html; charset=UTF-8");
         }
         
 
-
-
-        
-
         echo '</form>';
+        
+        
+        if (DEBUG_MODE == 1)
+            $logger->printEntries();
     ?>
     </body>
 </html>

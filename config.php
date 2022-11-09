@@ -7,7 +7,7 @@
 define('DB_NAME', 'csl_search');
 define('DB_SERVER', '127.0.0.1');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'rhscjkjd');*/
+define('DB_PASSWORD', 'whatever');*/
 
     
 define('DB_TYPE', 'sqlite');
@@ -18,7 +18,7 @@ define('DB_USER', '');
 define('DB_PASSWORD', '');
 
 define('ADMIN_MODE', '1');
-
+define('DEBUG_MODE', '1');
 
 define('SHOW_LOGGER_IMMEDIATELY', false);
 

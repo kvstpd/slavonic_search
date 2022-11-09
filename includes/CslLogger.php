@@ -77,7 +77,7 @@ class CslLogger
         }
     }
 
-	function fail_with_error_message($message)
+	function fail_with_error_message($message, $footer = '')
 	{
 		$this->log(1, $message);
 		
@@ -94,6 +94,8 @@ class CslLogger
 			echo '</div>';
 		}
 		
+        echo $footer;
+        
 		exit(1);
 	}
 

@@ -9,7 +9,7 @@ include_once("headers.php");
 
 
     
-if (ADMIN_MODE == 1)
+if (DEBUG_MODE == 1)
 	CslLogger::defaultLogger()->setLogImmediately(SHOW_LOGGER_IMMEDIATELY);
 
 CslLogger::defaultLogger()->setLogMode('json');
