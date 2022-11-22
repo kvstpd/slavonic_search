@@ -50,7 +50,7 @@ Church Slavonic texts are taken from Ponomar project Web page, https://www.ponom
 Fonts are taken from https://www.ponomar.net and http://irmologion.ru 
 
 
-# <a name="russian" id="russian"> Инструментарий для церковнославянских текстов
+# <a name="russian" id="russian" /> Инструментарий для церковнославянских текстов
 
 Веб-инструментарий для поиска, изучения и смены кодировки текстов на церковнославянском языке.
 
