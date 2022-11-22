@@ -158,7 +158,30 @@ function csl_simplify_word($csl)
         return '';
     
     $replace = array(
-                     // number titlos - at least some
+                     // Perhaps there's a better way to convert Slavonic numbers than just searching
+                     // over a list of {every number up to 500 + several larger ones that
+                     // are known to exist in the texts}.
+                     // But we need to differentiate them with titlo words along the way
+                     // and there are several rather abmigous cases.
+                     // So simple algorithms like:
+                     // 'if it contains a titlo, try to find a fitting titlo word
+                     // and if that is not found, use number conversion function'
+                     // won't work all the time - small titlo words or word parts will
+                     // definitely be found inside numerals, and vise versa,
+                     // and we'll get some rather ugly-looking words.
+                     // So either it's multi-stage replacement, perhaps
+                     // 'long titlo words' then 'numbers' then 'short titlo words'
+                     // (and defining proper 'long' and 'short' may prove not quite trivial)
+                     // or we try to keep the replacement simple and one-stage - like we do now.
+                     // Then the replacements should contain every number we want to convert
+                     // and PHP's strtr algorithm will take care of length,
+                     // replacing longer strings first (and length in bytes it uses works OK).
+                     // So far, this long and not exactly beautiful-looking list of replacements
+                     // seems to be working and correctly simplifying & converting to Civil letters
+                     // or Arabic numbers, never mixing them. We must keep watching out for errors though.
+                     
+                     
+                     // bigger number titlos - at least some
                      '҂зрк҃а'=>'7121', '҂зум҃ѕ'=>'7446',
                      '҂аѱ҃ѳ'=>'1709', '҂аѿч҃г'=>'1893',
                      '҂ар҃д'=>'1104', '҂ахѻ҃є'=>'1675',
@@ -194,8 +217,9 @@ function csl_simplify_word($csl)
                      'сп҃д'=>'284','сп҃є'=>'285','сп҃ѕ'=>'286','сп҃з'=>'287','сп҃и'=>'288','сп҃ѳ'=>'289', 'сч҃а'=>'291','сч҃г'=>'293',
                      'сч҃д'=>'294','сч҃є'=>'295','сч҃з'=>'297','сч҃и'=>'298','сч҃ѳ'=>'299',
 
-					// 'сна́'=>'251', that's wrong
-					// 'сн҃а'=>'251', usually also wrong though context dependent. in any case it's better to be wrong on the word side, not number side
+					// 'сн҃а'=>'251', usually NOT a number though context dependent.
+                    // (and thus can't be always correctly identified without AI)
+                    // in any case it's better to be wrong on the word side, not number side
  
                      'тє҃і'=>'315','тѕ҃і'=>'316','тз҃і'=>'317','ти҃і'=>'318','тѳ҃і'=>'319','тк҃а'=>'321','тк҃в'=>'322','тк҃г'=>'323',
                      'тк҃д'=>'324','тк҃ѕ'=>'326','тк҃з'=>'327','тк҃и'=>'328','тл҃а'=>'331','тл҃в'=>'332','тл҃г'=>'333','тл҃д'=>'334',
@@ -235,8 +259,6 @@ function csl_simplify_word($csl)
                      'с҃ѯ҃ѕ'=>'266',
                      
                                     
-
-                     
                      
                      'іі'=> 'II', // Latin num
                      
@@ -291,7 +313,8 @@ function csl_simplify_word($csl)
                      'ᲂу҆чт҃л'=> 'учител', 'чт҃л'=> 'чител', 'ᲂу҆чт҃'=> 'учит', 'ᲂу҆ч҃н'=> 'учен', 'ч҃тл'=> 'чител', 'ч҃т'=> 'чит',
                      'чн҃к'=> 'ченик','чн҃ч'=> 'ченич','чн҃ц'=> 'чениц', 'ч҃нк'=> 'ченик','ч҃нч'=> 'ченич','ч҃нц'=> 'чениц', 'чн҃'=> 'чен', 'ч҃н'=> 'чен',
                      'првⷣвн'=> 'праведн', 'првⷣен'=> 'праведен', 'првⷣнъ'=> 'праведен', 'првⷣнк'=> 'праведник', 'првⷣн'=> 'праведн', 'првⷣ' => 'прав',
-                     'є҆ѵⷢ҇а́л' => 'евангел', 'є҆ѵⷢ҇логиме́нос'=> 'евлогименос', //wrongly used titlo!
+                     'є҆ѵⷢ҇а́л' => 'евангел',
+                     'є҆ѵⷢ҇логиме́нос'=> 'евлогименос', //wrongly used titlo!
                      'є҆ѵⷢ҇л' => 'евангел',   'єѵⷢ҇л' => 'евангел', 'еѵⷢ҇л'=> 'евангел', 'заⷱ҇' => 'зач.', 'глⷡ҇а'=> 'глава', 'глаⷡ҇' => 'глав.',
                      'ѱл҃м'=> 'псалм', 'ѱаⷧ҇' => 'псалом', 'ѱл҃'=> 'псал',
                      'чл҃вѣк'=> 'человек', 'чл҃к'=> 'человек', 'чл҃ц'=> 'человец', 'чл҃в'=> 'челов', 'чл҃ч'=> 'человеч', 'ч҃лв'=> 'челов', 'чл҃о'=> 'чело',
@@ -307,8 +330,9 @@ function csl_simplify_word($csl)
                      
                      'ѿѧ̀'=> 'отъя', 'ѿѧ́'=> 'отъя', 'ѿѧ̑'=> 'отъя', 'ѿѧ'=> 'отъя',
                      'ѿи'=> 'отъи', 'ѿи́'=> 'отъи', 'ѿи҆'=> 'отъи',
+                     'ѿе'=> 'отъе', 'ѿе́' => 'отъе', 'ѿє҆́' => 'отъе', 'ѿє' => 'отъе', 'ѿє́' => 'отъе',
                      
-                     // greek gg and gk
+                     // greek gg, gx and gk
                      'сѷгк' => 'синк','сѵгк'=> 'синк', 'а҆гк' => 'анк', 'пагк' => 'панк', 'трагк' => 'транк', 'є҆гк' => 'енк', 'рагк'=>'ранк',
                      'ло́гг' => 'лонг', 'сѷгг' => 'синг', 'сѵ́гг'=>'синг',  'га́гг' => 'ганг', 'а҆гаѳагг' => 'агафанг', 'є҆рмїнїгг'=> 'ермининг',
                      'расто́ргг'=> 'расторгн', 'еѵа́гг'=>'еванг', 'єѵа́гг'=>'еванг', 'арха́гг'=>'арханг',
@@ -319,31 +343,41 @@ function csl_simplify_word($csl)
                      mb_chr(1141).mb_chr(768) => 'и',  mb_chr(1141).mb_chr(769) => 'и', mb_chr(1141).mb_chr(785) => 'и', mb_chr(1141).mb_chr(843) => 'и',
                      mb_chr(1141).mb_chr(776) => 'и',  mb_chr(1141).mb_chr(783) => 'и', mb_chr(1141).mb_chr(787) => 'и', mb_chr(1141).mb_chr(787) => 'и',
                      mb_chr(1141) => 'в',
+                     
                      // й is й,  ̾ is ъ but only before e я ю
                      'й' => 'й', mb_chr(830).'е' => 'ъе', mb_chr(830).'є' => 'ъе', mb_chr(830).'ѣ' => 'ъе',
                      mb_chr(830).'я' => 'ъя', mb_chr(830).'ѧ' => 'ъя', mb_chr(830).'ꙗ' => 'ъя', mb_chr(830).'ю' => 'ъю',
                      // otherwise remove it
                      mb_chr(830) => '',
                      //mb_chr(1080).mb_chr(785) => 'й',
+                     
                      //  remove any accents, breath and dieresis
                      mb_chr(768) => '', mb_chr(785) => '', mb_chr(834) =>  '', mb_chr(769) => '', mb_chr(847) => '',
                      mb_chr(776) => '', mb_chr(774) => '', mb_chr(783) => '', mb_chr(787) => '', mb_chr(788) => '',
                      mb_chr(1155) => '', // this is titlo ~
                      mb_chr(1158) => '', mb_chr(1159) => '',
-                     // Slavonic to Russian
+                     
+                     // Slavonic to Civil
                      'оу҆́'=> 'у', 'оу҆' => 'у', 'ᲂу҆'=> 'у', 'оу'=> 'у',
                      'є' => 'е', 'ѕ' => 'з', 'і' => 'и', 'ї'=> 'и', 'ѡ' => 'о', 'ѣ' => 'е', 'ѧ'=> 'я', 'ѫ' => 'у', 'ѯ' => 'кс', 'ѱ' => 'пс',
                      'ѳ' => 'ф', 'ѻ' => 'о', 'ѽ' => 'о', 'ѿ'=> 'от', 'ꙋ' => 'у', 'ꙗ'=> 'я', 'ѝ'=> 'и', 'ѐ'=> 'е',
-                     '҂'=> '1000*',
-                     //  Titlos can't be properly replaced by strstr but still...
+                     
+                     '҂'=> '1000*', // ugly fallback for thousands not in the number list above
+                     
+                     // Lone letter titlos mean no proper word was found, so as a last resort...
                      mb_chr(11744)=> 'б', mb_chr(11745)=> 'в', mb_chr(11746)=> 'г', mb_chr(11747)=> 'д', mb_chr(11748)=> 'ж',
                      mb_chr(11750)=> 'к', mb_chr(11751)=> 'л', mb_chr(11752)=> 'м', mb_chr(11753)=> 'н', mb_chr(11754)=> 'о',
                      mb_chr(11756)=> 'р', mb_chr(11757)=> 'с', mb_chr(11759)=> 'х', mb_chr(11761)=> 'ч', mb_chr(11764)=> 'ф',
+                     
+                     // these are in fact "separators" and shouldn't be in the word at all
+                     // but in case text-splitting algorithm goes wrong... 
                      '꙾' => ' ', ' '=> ' ',
 
 					//'🕅' => 'Марк. гл.:',
                      
                      // low-digit numbers should be processed last
+                     // (and that happens because of their short string length of course
+                     // not because they're at the end of the list)
                      'ч҃ѳ'=>'99', 'ч҃и'=>'98', 'ч҃з'=>'97', 'ч҃ѕ'=>'96', 'ч҃є'=>'95', 'ч҃д'=>'94', 'ч҃г'=>'93', 'ч҃в'=>'92', 'ч҃а'=>'91', 'ч҃'=>'90',
                      'п҃ѳ'=>'89', 'п҃и'=>'88', 'п҃з'=>'87', 'п҃ѕ'=>'86', 'п҃є'=>'85', 'п҃д'=>'84', 'п҃г'=>'83', 'п҃в'=>'82', 'п҃а'=>'81', 'п҃'=>'80',
                      'ѻ҃ѳ'=>'79', 'ѻ҃и'=>'78', 'ѻ҃з'=>'77', 'ѻ҃ѕ'=>'76', 'ѻ҃є'=>'75', 'ѻ҃д'=>'74', 'ѻ҃г'=>'73', 'ѻ҃в'=>'72', 'ѻ҃а'=>'71', 'ѻ҃'=>'70',
