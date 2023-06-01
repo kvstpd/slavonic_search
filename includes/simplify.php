@@ -15,14 +15,18 @@ include_once("csl_utils.php");
 
 function csl_normalise($text, $make_lowercase = true)
 {
-	// use composites EXCEPT FOR й which is a separate letter, though ponomar.net doesn't think so
+	// decompose diacritics EXCEPT FOR й which is a separate letter, though ponomar.net doesn't think so
     
     if ($make_lowercase)
         return strtr(mb_strtolower($text, 'UTF-8'), array('й' => 'й', 'ї' => 'ї', 'ѷ' => 'ѷ', 'ѐ'=> 'ѐ', 'ѝ' => 'ѝ',
-				'оу' => 'ᲂу' ));
+            'оу҆́' => 'ᲂу҆́', 'оу҆̀' => 'ᲂу҆̀', 'оу҆' => 'ᲂу҆', // ONLY when psili is present!
+				//'оу' => 'ᲂу'
+                    ));
     else
         return strtr($text, array('й' => 'й', 'ї' => 'ї', 'ѷ' => 'ѷ', 'ѐ'=> 'ѐ', 'ѝ' => 'ѝ',
-            'оу' => 'ᲂу', /* <- there's no capital of that */
+            //  there's no special capital of ᲂ 
+            'оу҆́' => 'ᲂу҆́', 'оу҆̀' => 'ᲂу҆̀', 'оу҆' => 'ᲂу҆',  // ONLY when psili is present!
+            //'оу' => 'ᲂу',
             'Й' => 'Й', 'Ї' => 'Ї', 'Ѷ' => 'Ѷ', 'Ѐ'=>'Ѐ', 'Ѝ' => 'Ѝ'));
 }
 
@@ -358,7 +362,9 @@ function csl_simplify_word($csl)
                      mb_chr(1158) => '', mb_chr(1159) => '',
                      
                      // Slavonic to Civil
-                     'оу҆́'=> 'у', 'оу҆' => 'у', 'ᲂу҆'=> 'у', 'оу'=> 'у',
+                     'оу҆́'=> 'у', 'оу҆̀'=> 'у', 'оу҆' => 'у',
+                     'ᲂу҆́'=> 'у', 'ᲂу҆̀'=> 'у', 'ᲂу҆' => 'у',
+                     //'оу'=> 'у', don't do this without psili: поучение, благоутробие
                      'є' => 'е', 'ѕ' => 'з', 'і' => 'и', 'ї'=> 'и', 'ѡ' => 'о', 'ѣ' => 'е', 'ѧ'=> 'я', 'ѫ' => 'у', 'ѯ' => 'кс', 'ѱ' => 'пс',
                      'ѳ' => 'ф', 'ѻ' => 'о', 'ѽ' => 'о', 'ѿ'=> 'от', 'ꙋ' => 'у', 'ꙗ'=> 'я', 'ѝ'=> 'и', 'ѐ'=> 'е',
                      
