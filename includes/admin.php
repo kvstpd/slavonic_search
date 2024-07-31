@@ -50,7 +50,7 @@ function populate_slavoniser_db($dir, $logger)
         {
             if (substr($fileName, -4) == $extension)
             {
-                if ( ($fileName != "Triodʹ Cvetnaya.txt") &&  ($fileName != "StJamesLiturgyBulg.txt") )
+                if ( ($fileName != "TriodCvetnaya.txt") &&  ($fileName != "StJamesLiturgyBulg.txt") )
                 {
                     $file_contents = file_get_contents($dir.$fileName);
         
